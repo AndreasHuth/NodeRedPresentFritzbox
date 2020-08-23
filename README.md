@@ -1,6 +1,9 @@
 # NodeRedPresentFritzbox
 ## Short Description
-MAX7219 Mqtt Ticker
+Present detection via mobile phone.
+
+It is checked whether a certain device (mobile phone) has dialed into the network. 
+This is done via the Fitzbox (MAC address of the device).
 
 You need:
 - node-red-contrib-fritz     https://flows.nodered.org/node/node-red-contrib-fritz
@@ -8,7 +11,11 @@ You need:
 
 The FLOW looks like this (just import the json-file) :-)
 
+![](https://github.com/AndreasHuth/NodeRedPresentFritzbox/blob/master/flow.png)
+
 You get the following info from the Fritzbox:
+
+![](https://github.com/AndreasHuth/NodeRedPresentFritzbox/blob/master/object.png)
 
 Interesting is the variable: NewActive.
 This variable indicates if the device is in the WLAN.
@@ -25,6 +32,6 @@ none
 ## Links
 see above.
 
-![](https://github.com/AndreasHuth/MqttTicker/blob/master/20200721_213043.jpg)
+
 
 
