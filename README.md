@@ -23,15 +23,10 @@ This variable indicates if the device is in the WLAN.
 Using the Simpletime is quite nice here because you can see since when you are logged in / out. 
 
 ## How to use
-Please download the whole project and open it direktly in Visual Studio Code. 
-PlatformIO Extension is necessary.
+Please download the json-file and import it into Node Red.
 
 ## further informations
 none
 
 ## Links
 see above.
-
-
-
-
