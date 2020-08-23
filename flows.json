@@ -1,0 +1,454 @@
+[
+    {
+        "id": "630b7802.37ed38",
+        "type": "tab",
+        "label": "Fritzbox",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "86f5d072.f7e69",
+        "type": "inject",
+        "z": "630b7802.37ed38",
+        "name": "8C:B8:4A:46:D2:BF",
+        "topic": "",
+        "payload": "{\"NewMACAddress\":\"8C:B8:4A:46:D2:BF\"}",
+        "payloadType": "json",
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "968bafe7.d4138"
+            ]
+        ]
+    },
+    {
+        "id": "968bafe7.d4138",
+        "type": "fritzbox-in",
+        "z": "630b7802.37ed38",
+        "device": "2cb8a474.418f9c",
+        "name": "",
+        "service": "urn:dslforum-org:service:Hosts:1",
+        "action": "GetSpecificHostEntry",
+        "arguments": "{\"NewMACAddress\":\"value\"}",
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "f45003f.67aa6",
+                "8e71184a.a00208",
+                "c9e72765.ce3268"
+            ]
+        ]
+    },
+    {
+        "id": "f45003f.67aa6",
+        "type": "debug",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "x": 1030,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a423747c.370b08",
+        "type": "debug",
+        "z": "630b7802.37ed38",
+        "name": "Debug Ausgabe",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1040,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "8e71184a.a00208",
+        "type": "function",
+        "z": "630b7802.37ed38",
+        "name": "Ist Server erreichbar?",
+        "func": "msg.tripTime = msg.payload;\nmsg.payload = msg.payload.NewActive\nmsg.payload = msg.payload !== \"0\" ?\n \"Andi anwesend\":\n \"Andi nicht zuhause\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "3014ba35.5d7156",
+                "80049696.ff8e78"
+            ]
+        ]
+    },
+    {
+        "id": "3014ba35.5d7156",
+        "type": "rbe",
+        "z": "630b7802.37ed38",
+        "name": "Nur bei Änderung des Wert weiter",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 720,
+        "y": 320,
+        "wires": [
+            [
+                "6b8adc9c.857f14",
+                "f45003f.67aa6"
+            ]
+        ]
+    },
+    {
+        "id": "fb2f808a.99cc1",
+        "type": "ui_button",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "group": "7d60f608.72b1e8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Check Andis Handy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"NewMACAddress\":\"8C:B8:4A:46:D2:BF\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "968bafe7.d4138"
+            ]
+        ]
+    },
+    {
+        "id": "80049696.ff8e78",
+        "type": "ui_toast",
+        "z": "630b7802.37ed38",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Ergebnis Dialog",
+        "x": 660,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c9e72765.ce3268",
+        "type": "function",
+        "z": "630b7802.37ed38",
+        "name": "Ist Server erreichbar?",
+        "func": "msg.tripTime = msg.payload;\nmsg.payload = msg.payload.NewActive\nmsg.payload = msg.payload !== \"0\" ?\n 1:\n 0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 400,
+        "wires": [
+            [
+                "ef9b88f.2561b78",
+                "a423747c.370b08",
+                "250680c1.b63fc",
+                "34cc4616.b9382a"
+            ]
+        ]
+    },
+    {
+        "id": "ef9b88f.2561b78",
+        "type": "ui_chart",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "group": "7d60f608.72b1e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Andreas",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-1",
+        "ymax": "2",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1020,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6b8adc9c.857f14",
+        "type": "link out",
+        "z": "630b7802.37ed38",
+        "name": "Status Fritzbox Andreas Handy",
+        "links": [
+            "d01e52e4.557568",
+            "b40e7a50.a94348"
+        ],
+        "x": 945,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f85dec02.7fed6",
+        "type": "comment",
+        "z": "630b7802.37ed38",
+        "name": "Abfrage Handy",
+        "info": "",
+        "x": 110,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3d27beaf.e4f512",
+        "type": "comment",
+        "z": "630b7802.37ed38",
+        "name": "Trigger via Inject or Button",
+        "info": "",
+        "x": 140,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "239a2bce.9c9d74",
+        "type": "comment",
+        "z": "630b7802.37ed38",
+        "name": "Ausgabe via Telegram",
+        "info": "",
+        "x": 1040,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5e56daad.976094",
+        "type": "ui_text",
+        "z": "630b7802.37ed38",
+        "group": "7d60f608.72b1e8",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "Uhrzeit Andreas",
+        "label": "",
+        "format": "{{msg.mydom}}.{{msg.mymonthn}}.{{msg.myyear}}  /  {{msg.mytime}} Uhr",
+        "layout": "row-right",
+        "x": 1040,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1b3ddbff.243924",
+        "type": "simpletime",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "x": 820,
+        "y": 520,
+        "wires": [
+            [
+                "5e56daad.976094"
+            ]
+        ]
+    },
+    {
+        "id": "250680c1.b63fc",
+        "type": "rbe",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 650,
+        "y": 520,
+        "wires": [
+            [
+                "1b3ddbff.243924"
+            ]
+        ]
+    },
+    {
+        "id": "34cc4616.b9382a",
+        "type": "switch",
+        "z": "630b7802.37ed38",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 650,
+        "y": 600,
+        "wires": [
+            [
+                "4d5e68b9.dbee98"
+            ],
+            [
+                "47a1a67d.1fc668"
+            ]
+        ]
+    },
+    {
+        "id": "4d5e68b9.dbee98",
+        "type": "change",
+        "z": "630b7802.37ed38",
+        "name": "Set colors",
+        "rules": [
+            {
+                "t": "set",
+                "p": "strongcolor",
+                "pt": "msg",
+                "to": "red",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Andreas ist nicht zuhause.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 580,
+        "wires": [
+            [
+                "97b0073b.07e918"
+            ]
+        ]
+    },
+    {
+        "id": "47a1a67d.1fc668",
+        "type": "change",
+        "z": "630b7802.37ed38",
+        "name": "Set colors",
+        "rules": [
+            {
+                "t": "set",
+                "p": "strongcolor",
+                "pt": "msg",
+                "to": "lime",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Andreas ist zuhause.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 620,
+        "wires": [
+            [
+                "97b0073b.07e918"
+            ]
+        ]
+    },
+    {
+        "id": "97b0073b.07e918",
+        "type": "ui_text",
+        "z": "630b7802.37ed38",
+        "group": "7d60f608.72b1e8",
+        "order": 3,
+        "width": 4,
+        "height": 1,
+        "name": "Colored text",
+        "label": "<font color= {{msg.strongcolor}} > {{msg.payload}}   </font>",
+        "format": "<font color= {{msg.color}} >  </font>",
+        "layout": "row-left",
+        "x": 1020,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2cb8a474.418f9c",
+        "type": "fritzbox-config",
+        "z": "",
+        "name": "fritz.box ok",
+        "host": "fritz.box",
+        "port": "49000",
+        "ssl": false
+    },
+    {
+        "id": "7d60f608.72b1e8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Group 1",
+        "tab": "7e1fd536.f5de94",
+        "order": 1,
+        "disp": true,
+        "width": "7",
+        "collapse": false
+    },
+    {
+        "id": "7e1fd536.f5de94",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Fritzbox",
+        "icon": "dashboard",
+        "order": 8,
+        "disabled": false,
+        "hidden": false
+    }
+]
